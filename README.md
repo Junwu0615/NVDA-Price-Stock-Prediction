@@ -32,7 +32,7 @@ conda env create -f C:\Users\xxx\environment.yaml
 
 ###  STEP.3　RUN
 ```py
-python NVDA-Price-Stock-Prediction.py -h
+python Entry.py -h
 ```
 
 ### STEP.4　HELP
@@ -46,32 +46,32 @@ python NVDA-Price-Stock-Prediction.py -h
 ### STEP.5　EXAMPLE
 - 使用「開盤價」、「最高價」、「最低價」、「交易量」， 4 種特徵來預測「收盤價」。
 ```py
-python NVDA-Price-Stock-Prediction.py -open T -high T -low T -vol T -utm F
+python Entry.py -open T -high T -low T -vol T -utm F
 ```
-- <img width='600' height='450' src="https://github.com/Junwu0615/NVDA-Price-Stock-Prediction/blob/main/output/output_model_open_high_low_volume.png"/>
+- <img width='600' height='450' src="https://github.com/Junwu0615/NVDA-Price-Stock-Prediction/blob/main/Output/output_model_open_high_low_volume.png"/>
 
 - 只使用「交易量」此特徵來預測「收盤價」。
 ```py
-python NVDA-Price-Stock-Prediction.py -open F -high F -low F -vol T -utm F
+python Entry.py -open F -high F -low F -vol T -utm F
 ```
-- <img width='600' height='450' src="https://github.com/Junwu0615/NVDA-Price-Stock-Prediction/blob/main/output/output_model_volume.png"/>
+- <img width='600' height='450' src="https://github.com/Junwu0615/NVDA-Price-Stock-Prediction/blob/main/Output/output_model_volume.png"/>
 
 - 使用已訓練過的模型進行預測。
 ```py
-python NVDA-Price-Stock-Prediction.py -open F -high F -low F -vol T -utm T
+python Entry.py -open F -high F -low F -vol T -utm T
 ```
 
 ## III.　說明過程
 
 ### A.　資料取得
 我透過 [Financial Modeling Prep](https://site.financialmodelingprep.com/) 取得我想預測的標的 NVIDIA ，它需要註冊會員以取得 API key，接著使用日線圖的 API 叫出該 Symbol 歷史資料。另外，我已先將其內容存儲成 json 格式 -> [`NVDA_history_20190225_20240223.json`](/dataset/NVDA_history_20190225_20240223.json)。
-- <img width='650' height='500' src="https://github.com/Junwu0615/NVDA-Price-Stock-Prediction/blob/main/output/NVDA_History_Price.png"/>
+- <img width='650' height='500' src="https://github.com/Junwu0615/NVDA-Price-Stock-Prediction/blob/main/Output/NVDA_History_Price.png"/>
 
 ### B.　資料預處理
 - 原始資料如下圖所示。
-- <img width='400' height='450' src="https://github.com/Junwu0615/NVDA-Price-Stock-Prediction/blob/main/sample_img/origin.jpg"/>
+- <img width='400' height='450' src="https://github.com/Junwu0615/NVDA-Price-Stock-Prediction/blob/main/Sample/origin.jpg"/>
 - 將資料範圍大小，規範於 0 至 1 區間，標準化後的資料如下圖所示。
-- <img width='430' height='450' src="https://github.com/Junwu0615/NVDA-Price-Stock-Prediction/blob/main/sample_img/norm.jpg"/>
+- <img width='430' height='450' src="https://github.com/Junwu0615/NVDA-Price-Stock-Prediction/blob/main/Sample/norm.jpg"/>
 - 接著將資料切割成訓練集 ( 90% ) 和測試集 ( 10% )，任務目標是預測「收盤價」，而其餘特徵都是餵給機器的輸入。
   ```
   x_train = result[:int(number_train), :-1]
