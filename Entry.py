@@ -4,8 +4,8 @@
 Update Time: 2024-11-24
 """
 
-from Depend.Model import Model
-from Depend.ArgumentParser import AP
+from package.Model import Model
+from package.ArgumentParser import AP
 
 class Entry:
     def __init__(self):

@@ -23,7 +23,7 @@ class Model:
         self.use_trained_model = obj.use_trained_model
         self.norm_check = ['T', 'True', 't']
 
-        file = "./Dataset/NVDA_history_20190225_20240223.json"
+        file = "./datasets/NVDA_history_20190225_20240223.json"
         self.loader = [json.loads(i) for i in open(file, "r")][0]
 
         gpus = tf.config.experimental.list_physical_devices("GPU")
@@ -87,7 +87,7 @@ class Model:
             ax2.legend(loc='upper right')
 
         ax1.tick_params(axis='x', labelrotation=90)
-        plt.savefig("./Output/NVDA_History_Price.png")
+        plt.savefig("./sample/NVDA_History_Price.png")
         plt.clf()
 
     def normalize(self) -> pd.DataFrame:
@@ -162,12 +162,12 @@ class Model:
         plt.plot(denorm_ytest, color='blue', label='Answer')
         plt.legend(loc='best')
         # plt.show()
-        plt.savefig(f"./Output/output_{model_name}.png")
+        plt.savefig(f"./sample/output_{model_name}.png")
         plt.clf()
 
     def main(self):
-        self.check_folder('./Output')
-        self.check_folder('./Trained')
+        self.check_folder('./sample')
+        self.check_folder('./trained')
 
         if self.use_trained_model in ['T', 'True', 't']:
             self.use_trained_model = True
@@ -202,10 +202,10 @@ class Model:
 
         # 一個batch有128個instance，總共跑50個迭代
         if self.use_trained_model:
-            model = tf.keras.models.load_model(f"./Trained/{model_name}.keras")
+            model = tf.keras.models.load_model(f"./trained/{model_name}.keras")
         else:
             model.fit(x_train, y_train, batch_size=128, epochs=200, validation_split=0.1, verbose=1)
-            model.save(f"./Trained/{model_name}.keras")
+            model.save(f"./trained/{model_name}.keras")
 
         # 用訓練好的 LSTM 模型對測試資料集進行預測
         pred = model.predict(x_test)
